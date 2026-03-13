@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>simple statements · yoga</title>
+  <!-- minimal, clean font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f9f7f4;
+      color: #1e2b24;
+      line-height: 1.7;
+      font-size: 1.2rem;
+    }
+    /* simple container – just max-width, no background, no boxes */
+    .simple-container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem 1.5rem;
+    }
+    /* header – plain text */
+    .simple-header {
+      margin: 3rem 0 4rem 0;
+      border-bottom: 2px solid #d4c9bc;
+      padding-bottom: 1.5rem;
+    }
+    .simple-header h1 {
+      font-size: 4.5rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: #2f5341;
+      line-height: 1.1;
+    }
+    .simple-header p {
+      font-size: 1.5rem;
+      color: #7f6e5d;
+      margin-top: 0.5rem;
+      font-weight: 300;
+    }
+    /* section titles – just a line below */
+    h2 {
+      font-size: 2.8rem;
+      font-weight: 350;
+      margin: 4rem 0 1.5rem 0;
+      border-bottom: 2px solid #cfc1b2;
+      padding-bottom: 0.5rem;
+      color: #36644f;
+      letter-spacing: -0.02em;
+    }
+    h3 {
+      font-size: 2rem;
+      font-weight: 350;
+      margin: 2.5rem 0 1rem 0;
+      color: #6f5f4e;
+    }
+    /* plain lists – no markers, just dashes */
+    ul, ol {
+      margin: 1.5rem 0 2rem 2rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+    /* image styling – very simple, just border */
+    img {
+      width: 100%;
+      height: auto;
+      margin: 2.5rem 0 1rem 0;
+      border: 2px solid #d9cfc0;
+    }
+    .img-caption {
+      text-align: center;
+      font-style: italic;
+      color: #7f7264;
+      margin-top: -1rem;
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+    /* quote style */
+    .quote {
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1.4;
+      margin: 3rem 0;
+      padding-left: 2rem;
+      border-left: 5px solid #c7b5a2;
+      color: #4a5f53;
+    }
+    hr {
+      border: none;
+      border-top: 2px dashed #cfc1b2;
+      margin: 4rem 0;
+    }
+    /* COOKIE MODAL - CENTERED, appears every time */
+    #cookieOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 40, 30, 0.85);
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .cookie-box {
+      background: white;
+      max-width: 450px;
+      padding: 2.5rem;
+      border: 3px solid #1e2b24;
+      box-shadow: 12px 12px 0 rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .cookie-box p {
+      font-size: 1.3rem;
+      margin: 1.5rem 0 2rem;
+      color: #1e2b24;
+    }
+    .cookie-box button {
+      background: none;
+      border: 2px solid #1e2b24;
+      padding: 0.8rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .cookie-box button:hover {
+      background: #1e2b24;
+      color: white;
+    }
+    .close-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      border: none;
+      background: none;
+    }
+  </style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBJZ7C7VV0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBJZ7C7VV0');
+</script>
+
+</head>
+<body>
+
+  <!-- COOKIE MODAL - CENTERED, appears on every visit -->
+  <div id="cookieOverlay">
+    <div class="cookie-box relative">
+      <span class="close-icon" id="closeCookieX">&times;</span>
+      <span class="text-6xl block mt-4">🧘</span>
+      <p>We don't use cookies to track you.
+Just a gentle pause before you begin.
+Close this and step onto your mat.</p>
+      <div>
+        <button id="acceptCookieBtn">continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const overlay = document.getElementById('cookieOverlay');
+      const acceptBtn = document.getElementById('acceptCookieBtn');
+      const closeBtn = document.getElementById('closeCookieX');
+
+      // Always show the popup on every page load (no localStorage check)
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'auto'; // allow scrolling behind modal
+
+      function hideOverlay() {
+        overlay.style.transition = 'opacity 0.2s';
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 200);
+      }
+
+      // Hide when any of the buttons are clicked
+      if (acceptBtn) acceptBtn.addEventListener('click', hideOverlay);
+      if (closeBtn) closeBtn.addEventListener('click', hideOverlay);
+      
+      // Optional: click on background does nothing (only buttons close)
+    })();
+  </script>
+
+  <!-- SIMPLE HEADER – just text, no boxes -->
+  <div style="max-width: 900px; margin: 0 auto; padding: 0 1.5rem;">
+    <div class="simple-header">
+      <h1>Yoga<br>in Plain Words</h1>
+      <p>since 2012</p>
+    </div>
+  </div>
+
+  <!-- main simple container -->
+  <div class="simple-container">
+
+    <!-- quote -->
+    <div class="quote">
+      “Yoga is not about touching your toes — it's what you learn on the way down.”
+    </div>
+
+    <!-- image -->
+    <img src="https://images.pexels.com/photos/3822186/pexels-photo-3822186.jpeg?auto=compress&cs=tinysrgb&w=1260&h=500&dpr=2" alt="Meditation">
+    <div class="img-caption">stillness · minsk</div>
+
+    <!-- section 1: living tradition -->
+    <h2>The Living Tradition</h2>
+    <p>Yoga is an ancient practice that unites body, breath, and awareness. The Sanskrit root <em>yuj</em> means "to yoke" or "to join" — bringing together effort and ease, movement and stillness. It's not a workout but a homecoming.</p>
+    <p>In the modern world, yoga often arrives as asana — the physical postures. Yet classical yoga (Patanjali's Yoga Sūtras) outlines eight limbs: ethical precepts, breath, sense withdrawal, concentration, meditation, and more. Asana is just one step.</p>
+    <ul>
+      <li>• Yamas & niyamas — ethical guidelines</li>
+      <li>• Pranayama — breath as life force</li>
+      <li>• Dhyana — meditation, the art of observing</li>
+    </ul>
+
+    <hr>
+
+    <!-- section 2: why practice -->
+    <h2>Why We Practice — Ten Uses</h2>
+    <ol>
+      <li>To inhabit the body fully — most of us live in our heads; yoga draws attention back to physical sensations.</li>
+      <li>To regulate the nervous system — conscious breathing shifts us from fight‑or‑flight to rest‑and‑digest.</li>
+      <li>To cultivate concentration — holding a pose trains the mind to focus.</li>
+      <li>To build functional strength & mobility — for ease: carrying groceries, playing with kids.</li>
+      <li>To process emotions — hips and shoulders store tension; mindful movement can release it.</li>
+      <li>To find community — group practice offers quiet connection without performance pressure.</li>
+      <li>To improve sleep — restorative postures and breathwork calm the mind.</li>
+      <li>To support recovery — yoga adapted to individual needs aids healing.</li>
+      <li>To explore self‑inquiry — "who am I beneath the thoughts?"</li>
+      <li>To simply pause — permission to be still for an hour.</li>
+    </ol>
+
+    <!-- image -->
+    <img src="https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=1260&h=500&dpr=2" alt="Warrior pose">
+    <div class="img-caption">warrior II · steadiness</div>
+
+    <hr>
+
+    <!-- section 3: benefits -->
+    <h2>What Research Confirms — Benefits</h2>
+    <ul>
+      <li><strong>Reduced cortisol:</strong> 12 weeks of yoga decreases stress markers.</li>
+      <li><strong>Improved flexibility & balance:</strong> critical for healthy aging.</li>
+      <li><strong>Spinal decompression:</strong> poses like cat‑cow hydrate spinal discs.</li>
+      <li><strong>Heart health:</strong> lowers blood pressure via vagal stimulation.</li>
+      <li><strong>Better sleep:</strong> 8 weeks of yoga nidra improves sleep onset.</li>
+      <li><strong>Emotional regulation:</strong> thicker prefrontal cortex, reduced amygdala reactivity.</li>
+      <li><strong>Lung capacity:</strong> pranayama expands tidal volume.</li>
+      <li><strong>Inflammation reduction:</strong> lower IL‑6 levels.</li>
+    </ul>
+    <p class="quote" style="font-size:1.2rem; border-left-color:#9b8c7c;">consistency matters more than intensity — 2‑3 sessions a week make a difference.</p>
+
+    <hr>
+
+    <!-- section 4: asanas (simple list) -->
+    <h2>Asanas we practice</h2>
+    <p>Here are poses commonly explored in our classes, grouped by family. Modifications always offered.</p>
+
+    <h3>standing poses</h3>
+    <p>Tadasana (mountain), Vrksasana (tree), Trikonasana (triangle), Virabhadrasana I & II (warrior), Parsvakonasana (side angle).</p>
+
+    <h3>forward folds & hip openers</h3>
+    <p>Uttanasana (standing fold), Paschimottanasana (seated fold), Janu Sirsasana (head‑to‑knee), Baddha Konasana (butterfly), Eka Pada Rajakapotasana (pigeon).</p>
+
+    <h3>backbends & chest openers</h3>
+    <p>Bhujangasana (cobra), Salabhasana (locust), Setu Bandhasana (bridge), Matsyasana (fish).</p>
+
+    <h3>inversions & restorative</h3>
+    <p>Viparita Karani (legs‑up‑wall), Balasana (child's pose), Savasana (corpse pose).</p>
+    <p>— plus yin variations: dragon, shoelace, caterpillar.</p>
+
+    <!-- image -->
+    <img src="https://images.pexels.com/photos/3823065/pexels-photo-3823065.jpeg?auto=compress&cs=tinysrgb&w=1260&h=500&dpr=2" alt="Seated twist">
+    <div class="img-caption">ardha matsyendrasana · spinal twist</div>
+
+    <hr>
+
+    <!-- section 5: eight limbs -->
+    <h2>A Glimpse Beyond Asana — The Eight Limbs</h2>
+    <p>Patanjali's Yoga Sūtras describe an eightfold path. Most modern classes focus on āsana, but the other limbs enrich practice:</p>
+    <ul>
+      <li><strong>Yama</strong> – ethical standards (non‑violence, truthfulness)</li>
+      <li><strong>Niyama</strong> – self‑discipline (purity, contentment, self‑study)</li>
+      <li><strong>Āsana</strong> – posture, seat</li>
+      <li><strong>Prāṇāyāma</strong> – breath control</li>
+      <li><strong>Pratyāhāra</strong> – withdrawal of senses</li>
+      <li><strong>Dhāraṇā</strong> – concentration</li>
+      <li><strong>Dhyāna</strong> – meditation</li>
+      <li><strong>Samādhi</strong> – blissful absorption</li>
+    </ul>
+
+    <hr>
+
+    <!-- section 6: yoga for every body -->
+    <h2>Yoga For Every Chapter Of Life</h2>
+    <p><strong>Prenatal & postnatal:</strong> gentle asanas to support changing bodies, breathing techniques for labor, and pelvic floor awareness. (We recommend starting second trimester.)</p>
+    <p><strong>Seniors & limited mobility:</strong> chair yoga, wall‑supported poses, emphasis on balance and joint health. No previous experience needed.</p>
+    <p><strong>Athletes:</strong> yoga complements running, cycling, team sports — improves flexibility, prevents injury, and aids recovery.</p>
+    <p><strong>Stress & burnout:</strong> slow flows, extended savasana, and yoga nidra (guided relaxation). Many students arrive exhausted and leave refreshed.</p>
+
+    <hr>
+
+    <!-- section 7: studio info -->
+    <h2>Mūla Yoga </h2>
+    <p>We opened in 2012 near metro Frunzenskaya. Classes are small (max 9) so teachers can give individual adjustments. All props included — mats, blocks, straps, blankets, bolsters.</p>
+    <p><strong>📍 Pobediteley Ave. 23, studio 5</strong> (entrance from courtyard, intercom 23B)</p>
+    <p>📞 +375 (29) 357-89-13  ·  hello@mulayoga.by</p>
+    <p>⏰ Mon–Fri 9:00–21:00, Sat 10:00–18:00, Sun closed (except workshops)</p>
+    <p>First class complimentary. Discounts for students, seniors, and those in financial need — just ask.</p>
+
+    <!-- image -->
+    <img src="https://images.pexels.com/photos/4056726/pexels-photo-4056726.jpeg?auto=compress&cs=tinysrgb&w=1260&h=500&dpr=2" alt="Studio">
+    <div class="img-caption">our minsk space · wooden floors, calm light</div>
+
+    <!-- footer line inside main -->
+    <div style="border-top: 2px solid #d4c9bc; margin-top: 5rem; padding-top: 2rem; font-size:0.9rem; color:#7b6e5f; display: flex; justify-content: space-between;">
+      <p>the yoga mat · minsk</p>
+      <p>simple statements · popup every visit</p>
+    </div>
+    <p style="text-align: center; font-size: 2.5rem; margin-top: 3rem; opacity: 0.4;">🧘  🪽  🌿</p>
+  </div>
+
+  <!-- simple footer -->
+  <div style="background: #e6dfd6; padding: 3rem; text-align: center; color: #3f5647; margin-top: 3rem;">
+    <p>© 2025 yoga in plain words · popup appears on every visit</p>
+  </div>
+
+  <!-- email decoder placeholder (unused but kept) -->
+  <script>
+    (function(){
+        function decodeEmail(encodedString) {
+            var email = "", 
+                r = parseInt(encodedString.substr(0, 2), 16), 
+                n, i;
+            for (n = 2; encodedString.length - n; n += 2){
+                i = parseInt(encodedString.substr(n, 2), 16) ^ r;
+                email += String.fromCharCode(i);
+            }
+            return email;
+        }
+        var elements = document.querySelectorAll('.__cf_email__');
+        for (var i = 0; i < elements.length; i++) {
+            var el = elements[i];
+            var encoded = el.getAttribute('data-cfemail');
+            if (encoded) {
+                var decodedEmail = decodeEmail(encoded);
+                el.innerHTML = decodedEmail;
+                if (el.parentNode.tagName === 'A') {
+                    el.parentNode.href = "mailto:" + decodedEmail;
+                }
+            }
+        }
+    })();
+  </script>
+</body>
+</html>
